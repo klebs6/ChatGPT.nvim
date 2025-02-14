@@ -53,7 +53,7 @@ M.complete = function()
   set_loading(true)
 
   Api.completions({
-    model = "o3-mini-high",
+    model = "o3-mini-2025-01-31",
     prompt = prefix,
     suffix = suffix,
     max_tokens = 2048,

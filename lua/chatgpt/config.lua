@@ -170,7 +170,7 @@ function M.defaults()
       },
     },
     openai_params = {
-      model = "o3-mini-high",
+      model = "o3-mini-2025-01-31",
       frequency_penalty = 0,
       presence_penalty = 0,
       max_tokens = 300,
@@ -179,7 +179,7 @@ function M.defaults()
       n = 1,
     },
     openai_edit_params = {
-      model = "o3-mini-high",
+      model = "o3-mini-2025-01-31",
       frequency_penalty = 0,
       presence_penalty = 0,
       temperature = 0,
