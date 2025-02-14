@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/settings.lua ]
 local M = {}
 M.vts = {}
 

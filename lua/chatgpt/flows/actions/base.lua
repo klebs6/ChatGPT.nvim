@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/actions/base.lua ]
 local classes = require("chatgpt.common.classes")
 local Signs = require("chatgpt.signs")
 local Spinner = require("chatgpt.spinner")

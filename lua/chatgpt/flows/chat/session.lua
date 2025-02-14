@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/chat/session.lua ]
 local classes = require("chatgpt.common.classes")
 local Path = require("plenary.path")
 local scan = require("plenary.scandir")

@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/actions/chat/init.lua ]
 -- ChatAction that can be used for actions of type "chat" in actions.json
 --
 -- This enables the use of gpt-3.5-turbo in user defined actions,

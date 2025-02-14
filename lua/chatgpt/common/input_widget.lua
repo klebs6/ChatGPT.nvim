@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/common/input_widget.lua ]
 local Input = require("nui.input")
 local Config = require("chatgpt.config")
 

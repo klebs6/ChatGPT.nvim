@@ -1,12 +1,12 @@
-local pickers = require("telescope.pickers")
-local conf = require("telescope.config").values
-local actions = require("telescope.actions")
+-- ---------------- [ File: lua/chatgpt/prompts.lua ]
+local pickers      = require("telescope.pickers")
+local conf         = require("telescope.config").values
+local actions      = require("telescope.actions")
 local action_state = require("telescope.actions.state")
-local previewers = require("telescope.previewers")
-local job = require("plenary.job")
-
-local Utils = require("chatgpt.utils")
-local Config = require("chatgpt.config")
+local previewers   = require("telescope.previewers")
+local job          = require("plenary.job")
+local Utils        = require("chatgpt.utils")
+local Config       = require("chatgpt.config")
 
 local function defaulter(f, default_opts)
   default_opts = default_opts or {}

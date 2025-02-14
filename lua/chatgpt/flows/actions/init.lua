@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/actions/init.lua ]
 local M = {}
 
 local ChatAction = require("chatgpt.flows.actions.chat")

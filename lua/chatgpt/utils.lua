@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/utils.lua ]
 local M = {}
 
 local ESC_FEEDKEY = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)

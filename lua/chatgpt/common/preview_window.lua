@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/common/preview_window.lua ]
 local Popup = require("nui.popup")
 local Config = require("chatgpt.config")
 

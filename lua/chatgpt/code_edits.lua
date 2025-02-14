@@ -1,15 +1,16 @@
+-- ---------------- [ File: lua/chatgpt/code_edits.lua ]
 local M = {}
 
-local Layout = require("nui.layout")
-local Popup = require("nui.popup")
+local Layout    = require("nui.layout")
+local Popup     = require("nui.popup")
 
 local ChatInput = require("chatgpt.input")
-local Api = require("chatgpt.api")
-local Config = require("chatgpt.config")
-local Utils = require("chatgpt.utils")
-local Spinner = require("chatgpt.spinner")
-local Settings = require("chatgpt.settings")
-local Help = require("chatgpt.help")
+local Api       = require("chatgpt.api")
+local Config    = require("chatgpt.config")
+local Utils     = require("chatgpt.utils")
+local Spinner   = require("chatgpt.spinner")
+local Settings  = require("chatgpt.settings")
+local Help      = require("chatgpt.help")
 
 EDIT_FUNCTION_ARGUMENTS = {
   function_call = {

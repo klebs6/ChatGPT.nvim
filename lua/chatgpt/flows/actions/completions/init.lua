@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/actions/completions/init.lua ]
 local classes = require("chatgpt.common.classes")
 local BaseAction = require("chatgpt.flows.actions.base")
 local Api = require("chatgpt.api")

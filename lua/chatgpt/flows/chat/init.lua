@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/chat/init.lua ]
 local Session = require("chatgpt.flows.chat.session")
 local Prompts = require("chatgpt.prompts")
 local Chat = require("chatgpt.flows.chat.base")

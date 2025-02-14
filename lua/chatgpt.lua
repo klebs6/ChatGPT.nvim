@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt.lua ]
 -- main module file
 local api = require("chatgpt.api")
 local module = require("chatgpt.module")

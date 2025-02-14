@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/signs.lua ]
 local Config = require("chatgpt.config")
 
 local M = {}

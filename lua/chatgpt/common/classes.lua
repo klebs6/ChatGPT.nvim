@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/common/classes.lua ]
 --- classes.lua
 --
 -- The classes library enables simple OOP constructs using prototypes and meta-tables.

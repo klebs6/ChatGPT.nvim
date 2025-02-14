@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/flows/chat/base.lua ]
 local classes = require("chatgpt.common.classes")
 local Layout = require("nui.layout")
 local Popup = require("nui.popup")

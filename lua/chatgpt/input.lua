@@ -1,9 +1,10 @@
-local Popup = require("nui.popup")
-local Text = require("nui.text")
+-- ---------------- [ File: lua/chatgpt/input.lua ]
+local Popup    = require("nui.popup")
+local Text     = require("nui.text")
 local defaults = require("nui.utils").defaults
-local is_type = require("nui.utils").is_type
-local event = require("nui.utils.autocmd").event
-local Config = require("chatgpt.config")
+local is_type  = require("nui.utils").is_type
+local event    = require("nui.utils.autocmd").event
+local Config   = require("chatgpt.config")
 
 -- exiting insert mode places cursor one character backward,
 -- so patch the cursor position to one character forward

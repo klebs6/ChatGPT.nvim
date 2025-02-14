@@ -1,3 +1,4 @@
+-- ---------------- [ File: lua/chatgpt/spinner.lua ]
 -- Credits: https://github.com/charmbracelet/bubbles/blob/master/spinner/spinner.go
 
 local Spinner = {}
