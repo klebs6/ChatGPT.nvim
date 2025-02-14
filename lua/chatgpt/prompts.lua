@@ -125,30 +125,54 @@ end
 
 local M = {}
 function M.selectAwesomePrompt(opts)
-  opts = opts or {}
-  pickers
+    opts = opts or {}
+    pickers
     .new(opts, {
-      sorting_strategy = "ascending",
-      layout_config = {
-        height = 0.5,
-      },
-      results_title = "ChatGPT Acts As ...",
-      prompt_prefix = Config.options.popup_input.prompt,
-      selection_caret = Config.options.chat.answer_sign .. " ",
-      prompt_title = "Prompt",
-      finder = finder({ url = Config.options.predefined_chat_gpt_prompts }),
-      sorter = conf.generic_sorter(opts),
-      previewer = display_content_wrapped.new({}),
-      attach_mappings = function(prompt_bufnr)
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-          opts.cb(selection.display, selection.value)
-        end)
-        return true
-      end,
+        sorting_strategy = "ascending",
+        layout_strategy = "horizontal", -- or "flex"
+        layout_config = {
+            height = 0.8,
+            width = 0.8,
+            prompt_position = "top",
+        },
+        initial_mode = "insert",   -- Start in insert mode
+        results_title = "ChatGPT Acts As ...",
+        prompt_prefix = Config.options.popup_input.prompt,
+        selection_caret = Config.options.chat.answer_sign .. " ",
+        prompt_title = "Prompt",
+        finder = finder({ url = Config.options.predefined_chat_gpt_prompts }),
+        sorter = conf.generic_sorter(opts),
+        previewer = display_content_wrapped.new({}),
+        attach_mappings = function(prompt_bufnr, map)
+            -- If you want to immediately select the top result once the results appear
+            local actions = require("telescope.actions")
+            local state = require("telescope.actions.state")
+
+            -- Replace default selection
+            actions.select_default:replace(function()
+                local selection = state.get_selected_entry()
+                if not selection then
+                    vim.notify("[ChatGPT] nothing selected", vim.log.levels.WARN)
+                    return
+                end
+                actions.close(prompt_bufnr)
+                opts.cb(selection.display, selection.value)
+            end)
+
+            -- Optionally: automatically pick the first item on open
+            vim.schedule(function()
+                local picker = state.get_current_picker(prompt_bufnr)
+                local entries = picker:get_all_results()
+                if #entries > 0 then
+                    picker:set_selection(picker:get_first_selection()) 
+                end
+            end)
+
+            return true
+        end,
     })
     :find()
+
 end
 
 return M

@@ -665,9 +665,16 @@ function Chat:map(keys, fn, windows, modes)
 end
 
 function Chat:set_active_panel(panel)
+  if not (panel and panel.winid and vim.api.nvim_win_is_valid(panel.winid)) then
+    -- fallback
+    self.active_panel = nil
+    return
+  end
+
   vim.api.nvim_set_current_win(panel.winid)
   self.active_panel = panel
-  Utils.change_mode_to_normal()
+  -- Force normal mode so arrow keys / other mappings do not vanish
+  vim.cmd("stopinsert()")
 
   if self.active_panel == self.chat_window then
     self:show_message_selection()
@@ -675,6 +682,7 @@ function Chat:set_active_panel(panel)
     self:hide_message_selection()
   end
 end
+
 
 function Chat:get_layout_params()
   local lines_height = vim.api.nvim_get_option("lines")
@@ -883,12 +891,12 @@ function Chat:open()
   end
 
   local function inTable(tbl, item)
-    for key, value in pairs(tbl) do
-      if value == item then
-        return key
+      for index, val in ipairs(tbl) do
+          if val == item then
+              return index
+          end
       end
-    end
-    return false
+      return nil
   end
 
   -- toggle settings
@@ -952,36 +960,48 @@ function Chat:open()
     Sessions:refresh()
   end, { self.settings_panel, self.chat_input, self.help_panel })
 
-  -- cycle panes
-  self:map(Config.options.chat.keymaps.cycle_windows, function()
-    local in_table = inTable(self.open_extra_panels, self.active_panel)
-    if not self.active_panel then
-      self:set_active_panel(self.chat_input)
-    end
-    if self.active_panel == self.chat_input then
+  -- cycle windows
+  Chat:map(Config.options.chat.keymaps.cycle_windows, function()
+      -- always end insert mode first, or the popup map might not work
+      if vim.fn.mode() == "i" then
+          vim.cmd("stopinsert")
+      end
+
+      local open_panels = {}
+      -- The main “chat_input” is 1
+      table.insert(open_panels, self.chat_input)
+      -- If system role is open, push it next
       if self.system_role_open then
-        self:set_active_panel(self.system_role_panel)
-      else
-        self:set_active_panel(self.chat_window)
+          table.insert(open_panels, self.system_role_panel)
       end
-    elseif self.active_panel == self.system_role_panel then
-      self:set_active_panel(self.chat_window)
-    elseif self.active_panel == self.chat_window then
-      if #self.open_extra_panels > 0 then
-        self:set_active_panel(self.open_extra_panels[1])
-      else
-        self:set_active_panel(self.chat_input)
+      -- The main chat window
+      table.insert(open_panels, self.chat_window)
+      -- Any extra panels
+      for _, panel in ipairs(self.open_extra_panels) do
+          table.insert(open_panels, panel)
       end
-    elseif in_table then
-      local next_index = (in_table + 1) % (#self.open_extra_panels + 1)
-      if next_index == 0 then
-        self:set_active_panel(self.chat_input)
-      else
-        self:set_active_panel(self.open_extra_panels[next_index])
+
+      local idx = inTable(open_panels, self.active_panel)
+      if not idx then
+          -- If our current panel is not in open_panels, fall back to chat_input
+          self:set_active_panel(self.chat_input)
+          return
       end
-    else
-      self:set_active_panel(self.chat_input)
-    end
+
+      -- Move to the next panel in the open_panels list, wrapping around
+      local next_idx = idx + 1
+      if next_idx > #open_panels then
+          next_idx = 1
+      end
+
+      local next_panel = open_panels[next_idx]
+      -- Always pcall to avoid errors if the window is closed
+      if next_panel.winid and vim.api.nvim_win_is_valid(next_panel.winid) then
+          self:set_active_panel(next_panel)
+      else
+          -- fallback
+          self:set_active_panel(self.chat_input)
+      end
   end)
 
   -- cycle modes
